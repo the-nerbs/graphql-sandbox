@@ -1,0 +1,13 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageVersion Include="GraphQL.Server.Ui.Altair" Version="7.2.0" />
+    <!-- <PackageVersion Include="HotChocolate.AspNetCore" Version="11.3.3" /> -->
+    <!-- <PackageVersion Include="HotChocolate.Stitching" Version="11.3.3" /> -->
+
+    <PackageVersion Include="HotChocolate.AspNetCore" Version="12.16.0" />
+    <PackageVersion Include="HotChocolate.Stitching"  Version="12.16.0" />
+  </ItemGroup>
+</Project>

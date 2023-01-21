@@ -1,0 +1,59 @@
+version: '3.5'
+
+services:
+  alpha:
+    image: graphql-test/alpha
+    build:
+      context: .
+      dockerfile: ./ServiceA/Dockerfile
+      target: debug
+      args:
+        CONFIG: Debug
+
+    ports:
+      - 8081:80
+
+    environment:
+      ASPNETCORE_ENVIRONMENT: 'Development'
+      DOTNET_ENVIRONMENT: 'Development'
+
+    volumes:
+      - ~/.vsdbg:/remote_debugger:ro
+
+  bravo:
+    image: graphql-test/bravo
+    build:
+      context: .
+      dockerfile: ./ServiceB/Dockerfile
+      target: debug
+      args:
+        CONFIG: Debug
+        
+    ports:
+      - 8082:80
+
+    environment:
+      ASPNETCORE_ENVIRONMENT: 'Development'
+      DOTNET_ENVIRONMENT: 'Development'
+
+    volumes:
+      - ~/.vsdbg:/remote_debugger:ro
+
+  gateway:
+    image: graphql-test/gateway
+    build:
+      context: .
+      dockerfile: ./Gateway/Dockerfile
+      target: debug
+      args:
+        CONFIG: Debug
+
+    environment:
+      ASPNETCORE_ENVIRONMENT: 'Development'
+      DOTNET_ENVIRONMENT: 'Development'
+
+    ports:
+      - 8080:80
+
+    volumes:
+      - ~/.vsdbg:/remote_debugger:ro
