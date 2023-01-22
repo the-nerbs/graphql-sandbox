@@ -1,6 +1,8 @@
+using Common;
+using Common.GraphQL;
+
 namespace Gateway;
 
-public record ComponentInfo(string Name, string Version);
 public record SystemInfo(ComponentInfo[] components);
 
 public class Query
@@ -12,7 +14,7 @@ public class Query
     {
         _httpClientFactory = httpClientFactory;
     }
-    
+
 
     public async Task<SystemInfo> GetSystemInfoAsync()
     {
@@ -25,11 +27,17 @@ public class Query
         return new SystemInfo(components);
     }
 
+
     private async Task<ComponentInfo> QueryServiceInfoAsync(string schema, string endpoint)
     {
         var httpClient = _httpClientFactory.CreateClient(schema);
-        var graphQLClient = new GraphQL.GraphQLClient(httpClient, endpoint);
+        var graphQLClient = new GraphQLClient(httpClient, endpoint);
 
-        return await graphQLClient.Query<ComponentInfo>(@"query { componentInfo { name version } }");
+        var data = await graphQLClient.Query(
+            @"query { componentInfo { name version } }",
+            () => new { componentInfo = default(ComponentInfo)! }
+        );
+
+        return data.componentInfo;
     }
 }

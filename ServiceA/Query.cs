@@ -1,6 +1,6 @@
-namespace ServiceA;
+using Common;
 
-public record ComponentInfo(string Name, string Version);
+namespace ServiceA;
 
 public record AlphaData(double x, double y, string name);
 
@@ -16,7 +16,8 @@ public class Query
         };
     }
 
-    public ComponentInfo GetComponentInfo() {
+    public ComponentInfo GetComponentInfo()
+    {
         return new ComponentInfo("Service Alpha", "1.2.3.4");
     }
 }

@@ -1,5 +1,3 @@
-using HotChocolate.AspNetCore;
-using HotChocolate.Stitching;
 using ServiceB;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -32,10 +30,15 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
-
 app.MapControllers();
 
-app.MapGraphQL();
+app.UseRouting();
+
+app.UseAuthorization();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapGraphQL();
+});
 
 app.Run();

@@ -1,6 +1,6 @@
-namespace ServiceB;
+using Common;
 
-public record ComponentInfo(string Name, string Version);
+namespace ServiceB;
 
 public record BravoData(double x, double y, int id);
 
@@ -16,7 +16,8 @@ public class Query
         };
     }
 
-    public ComponentInfo GetComponentInfo() {
+    public ComponentInfo GetComponentInfo()
+    {
         return new ComponentInfo("Service Bravo", "2.3.4.5");
     }
 }
