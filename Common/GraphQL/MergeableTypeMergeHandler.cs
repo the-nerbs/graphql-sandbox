@@ -63,7 +63,46 @@ class MergeableTypeMergeHandler : ITypeMergeHandler
 
     private static bool AreSameShape(ObjectTypeDefinitionNode x, ObjectTypeDefinitionNode y)
     {
-        //TODO: actually check that these types are the same
-        return true;
+        var xFields = x.Fields.OrderBy(f => f.Name.Value).ToArray();
+        var yFields = y.Fields.OrderBy(f => f.Name.Value).ToArray();
+
+        bool areSame = xFields.Length == yFields.Length;
+
+        if (areSame)
+        {
+            for (int i = 0; areSame && i < xFields.Length; i++)
+            {
+                FieldDefinitionNode xf = xFields[i];
+                FieldDefinitionNode yf = yFields[i];
+
+                // note: GraphQL field names are case-sensitive
+                areSame = xf.Name.Value == yf.Name.Value
+                       && AreSameType(xf.Type, yf.Type);
+            }
+        }
+
+        return areSame;
+    }
+
+    private static bool AreSameType(ITypeNode x, ITypeNode y)
+    {
+        if (x is ListTypeNode xList)
+        {
+            return y is ListTypeNode yList
+                && AreSameType(xList.Type, yList.Type);
+        }
+        else if (x is NamedTypeNode xNamed)
+        {
+            // note: GraphQL types are case sensitive
+            return y is NamedTypeNode yNamed
+                && xNamed.Name.Value == yNamed.Name.Value;
+        }
+        else if (x is NonNullTypeNode xNotNull)
+        {
+            return y is NonNullTypeNode yNotNull
+                && AreSameType(xNotNull.Type, yNotNull.Type);
+        }
+        
+        throw new ArgumentException($"Unexpected type node kind {x.GetType().FullName}");
     }
 }
