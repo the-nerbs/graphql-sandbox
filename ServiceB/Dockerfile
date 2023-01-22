@@ -16,10 +16,14 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 ARG CONFIG
 WORKDIR /src
 
+# Note: Common should probably come from a nuget feed
+# instead of being build for each service separately.
+COPY [ "Common/Common.csproj", "Common/Common.csproj" ]
 COPY [ "ServiceB/ServiceB.csproj", "ServiceB/ServiceB.csproj" ]
 COPY [ "*.props", "." ]
 RUN dotnet restore "ServiceB/ServiceB.csproj"
 
+COPY [ "Common/", "Common/." ]
 COPY [ "ServiceB/", "ServiceB/." ]
 RUN dotnet build "ServiceB/ServiceB.csproj" -c "$CONFIG" -o /app/build
 

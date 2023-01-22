@@ -12,4 +12,8 @@
     <PackageReference Include="GraphQL.Server.Ui.Altair" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj" />
+  </ItemGroup>
+
 </Project>

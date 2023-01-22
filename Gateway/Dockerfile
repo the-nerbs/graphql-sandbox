@@ -16,10 +16,14 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 ARG CONFIG
 WORKDIR /src
 
+# Note: Common should probably come from a nuget feed
+# instead of being build for each service separately.
+COPY [ "Common/Common.csproj", "Common/Common.csproj" ]
 COPY [ "Gateway/Gateway.csproj", "Gateway/Gateway.csproj" ]
 COPY [ "*.props", "." ]
 RUN dotnet restore "Gateway/Gateway.csproj"
 
+COPY [ "Common/", "Common/." ]
 COPY [ "Gateway/", "Gateway/." ]
 RUN dotnet build "Gateway/Gateway.csproj" -c "$CONFIG" -o /app/build
 

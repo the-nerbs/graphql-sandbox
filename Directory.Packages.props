@@ -1,13 +1,17 @@
 <Project>
   <PropertyGroup>
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <!--
+      Also occurs with:
+      <HotChocolateVersion>11.3.3</HotChocolateVersion>
+    -->
+    <HotChocolateVersion>12.16.0</HotChocolateVersion>
   </PropertyGroup>
   <ItemGroup>
     <PackageVersion Include="GraphQL.Server.Ui.Altair" Version="7.2.0" />
-    <!-- <PackageVersion Include="HotChocolate.AspNetCore" Version="11.3.3" /> -->
-    <!-- <PackageVersion Include="HotChocolate.Stitching" Version="11.3.3" /> -->
-
-    <PackageVersion Include="HotChocolate.AspNetCore" Version="12.16.0" />
-    <PackageVersion Include="HotChocolate.Stitching"  Version="12.16.0" />
+    <PackageVersion Include="HotChocolate.AspNetCore"  Version="$(HotChocolateVersion)" />
+    <PackageVersion Include="HotChocolate.Execution"  Version="$(HotChocolateVersion)" />
+    <PackageVersion Include="HotChocolate.Stitching"   Version="$(HotChocolateVersion)" />
+    <PackageVersion Include="HotChocolate.Types"       Version="$(HotChocolateVersion)" />
   </ItemGroup>
 </Project>
